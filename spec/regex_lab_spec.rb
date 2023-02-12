@@ -20,6 +20,18 @@ describe "Working with Regular expressions" do
     end
   end
 
+  def starts_with_a_vowel?(word)
+    word =~ /\A[AEIOUaeiou]/
+  end
+
+  def starts_with_a_vowel?(word)
+    word =~ /\A[AEIOUaeiou]/ ? true : false
+  end
+  
+
+
+
+
   describe "#words_starting_with_un_and_ending_with_ing" do
     it "returns an array with the words starting with 'un' and ending with 'ing'" do
       words_string = "unassuming ambiguous understanding pomp circumstance uninteresting uncompromising grouchy corollary"
@@ -30,6 +42,12 @@ describe "Working with Regular expressions" do
     end
   end
 
+  def words_starting_with_un_and_ending_with_ing(words_string)
+    words = words_string.split(" ")
+    words.select { |word| word =~ /\Aun.*ing\z/ }
+  end
+  
+
   describe "#words_five_letters_long" do
     it "returns an array of words that are five letters long" do
       words_string = "extreme briny crepe parking snaps grouping snafu round dog be fork spoon"
@@ -38,6 +56,13 @@ describe "Working with Regular expressions" do
       expect(words_five_letters_long(words_string)).not_to include("fork")
     end
   end
+
+
+  def words_five_letters_long(words_string)
+    words = words_string.split(" ")
+    words.select { |word| word.length == 5 }
+  end
+  
 
   describe "#first_word_capitalized_and_ends_with_punctuation?" do
     it "Returns true for text starting with a capital letter and ending with puncutation" do
@@ -60,6 +85,22 @@ describe "Working with Regular expressions" do
     end
   end
 
+  def first_word_capitalized_and_ends_with_punctuation?(text)
+    first_word = text.split(" ").first
+    first_word[0] == first_word[0].upcase && text[-1] =~ /[.!?]/
+  end
+  
+  # def first_word_capitalized_and_ends_with_punctuation?(text)
+  #   /\A[A-Z][^.!?]*[.!?]\z/.match?(text)
+  # end
+
+  # def first_word_capitalized_and_ends_with_punctuation?(text)
+  #   return text =~ /^[A-Z][\w\s]+[.!?]$/
+  # end
+
+ 
+  
+  
   describe "#valid_phone_number?" do
     it "returns true for valid phone numbers, regardless of formatting" do
       valid_numbers = ["2438894546", "(718)891-1313", "234 435 9978", "(800)4261134"]
@@ -73,4 +114,9 @@ describe "Working with Regular expressions" do
   end
 
 
+end
+
+
+def valid_phone_number?(phone_number)
+  /\A\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\z/.match(phone_number) != nil
 end
